@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital India: Power to Empower - Infographic</title>
+    <title>Digital India: Power to Empower - Infographic by Anshumaan Vishnu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -440,7 +440,21 @@
             const insightOutput = document.getElementById('insightOutput');
             const loadingIndicator = document.getElementById('loadingIndicator');
 
-            getInsightBtn.addEventListener('click', async () => {
+            // Hardcoded insights for static hosting
+            const insightsData = {
+                "UMANG": "UMANG (Unified Mobile Application for New-age Governance) is a single, unified mobile application that provides access to various government services, ranging from Aadhaar, DigiLocker, and EPFO to various state and central government services, all from one platform. It simplifies citizen interaction with government services.",
+                "DigiLocker": "DigiLocker is a secure cloud-based platform for the issuance and verification of documents and certificates. It provides a dedicated cloud space to every Indian citizen for storing important documents like driving licenses, vehicle registration, and academic mark sheets digitally, reducing the need for physical documents.",
+                "GeM Portal": "The Government e-Marketplace (GeM) is an online platform for public procurement in India. It aims to enhance transparency, efficiency, and speed in public procurement, facilitating online purchases of goods and services required by various government departments, organizations, and PSUs.",
+                "MyGov": "MyGov is a citizen engagement platform launched by the Government of India. It aims to promote active participation of Indian citizens in the country's governance and development. Citizens can contribute to policy formulation, provide feedback on various government initiatives, and participate in discussions.",
+                "Jan Dhan Yojana": "Pradhan Mantri Jan Dhan Yojana (PMJDY) is a national mission for financial inclusion to ensure access to financial services, namely, banking/savings & deposit accounts, remittance, credit, insurance, and pension in an affordable manner. It has significantly expanded banking reach in India.",
+                "Startup India": "Startup India is a flagship initiative of the Government of India, launched to build a strong ecosystem for nurturing innovation and startups in the country. It aims to empower startups to grow through innovation and design, driving sustainable economic growth and generating large-scale employment opportunities.",
+                "BharatNet": "BharatNet is a national broadband project that aims to provide affordable broadband connectivity to all Gram Panchayats (village councils) in India. It is one of the largest rural broadband projects in the world, utilizing optical fiber to bridge the digital divide in rural areas.",
+                "Digital Infrastructure as a Core Utility": "This pillar of Digital India focuses on ensuring that high-speed internet and mobile connectivity are available as a fundamental utility to every citizen. It emphasizes robust digital infrastructure as the backbone for delivering online services and fostering digital growth across the nation.",
+                "Governance & Services on Demand": "This pillar aims to make government services easily accessible to citizens electronically. It focuses on integrating various government departments and services to provide seamless, online, and real-time delivery, ensuring efficiency, transparency, and convenience for the public.",
+                "Digital Empowerment of Citizens": "This pillar is dedicated to promoting universal digital literacy and providing accessible digital resources to all citizens. It seeks to equip individuals with the knowledge and skills necessary to effectively utilize digital technologies, fostering an inclusive and digitally literate society."
+            };
+
+            getInsightBtn.addEventListener('click', () => {
                 const selectedInitiative = initiativeSelect.value;
                 if (!selectedInitiative) {
                     insightOutput.innerHTML = '<span class="text-red-500">Please select an initiative first.</span>';
@@ -450,36 +464,12 @@
                 insightOutput.innerHTML = '';
                 loadingIndicator.classList.remove('hidden');
 
-                const prompt = `Provide a concise explanation (around 100-150 words) of the Digital India initiative or concept named "${selectedInitiative}". Focus on its purpose, key features, and impact.`;
-
-                let chatHistory = [];
-                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-                const payload = { contents: chatHistory };
-                const apiKey = "";
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    const result = await response.json();
-
-                    if (result.candidates && result.candidates.length > 0 &&
-                        result.candidates[0].content && result.candidates[0].content.parts &&
-                        result.candidates[0].content.parts.length > 0) {
-                        const text = result.candidates[0].content.parts[0].text;
-                        insightOutput.innerHTML = text;
-                    } else {
-                        insightOutput.innerHTML = '<span class="text-red-500">Could not retrieve insight. Please try again.</span>';
-                    }
-                } catch (error) {
-                    console.error('Error calling Gemini API:', error);
-                    insightOutput.innerHTML = '<span class="text-red-500">An error occurred while fetching the insight.</span>';
-                } finally {
+                // Simulate a brief loading time for better user experience
+                setTimeout(() => {
+                    const insightText = insightsData[selectedInitiative] || '<span class="text-red-500">Insight not available for this initiative.</span>';
+                    insightOutput.innerHTML = insightText;
                     loadingIndicator.classList.add('hidden');
-                }
+                }, 500); // Simulate 0.5 seconds loading
             });
         });
     </script>
